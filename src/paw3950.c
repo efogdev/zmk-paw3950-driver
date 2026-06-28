@@ -383,7 +383,7 @@ static void paw3950_gpio_callback(const struct device *gpiob, struct gpio_callba
 }
 
 static void paw3950_work_callback(struct k_work *work) {
-    struct pixart_data *data = CONTAINER_OF(work, struct pixart_data, trigger_work);
+    const struct pixart_data *data = CONTAINER_OF(work, struct pixart_data, trigger_work);
     const struct device *dev = data->dev;
 
     paw3950_report_data(dev);
@@ -522,7 +522,7 @@ static const struct sensor_driver_api paw3950_driver_api = {
 };
 
 #if IS_ENABLED(CONFIG_PM_DEVICE)
-static int paw3950_pm_action(const struct device *dev, enum pm_device_action action) {
+static int paw3950_pm_action(const struct device *dev, const enum pm_device_action action) {
     struct pixart_data *data = dev->data;
     const struct pixart_config *config = dev->config;
 
@@ -531,7 +531,7 @@ static int paw3950_pm_action(const struct device *dev, enum pm_device_action act
         if (pm_device_wakeup_is_enabled(dev)) {
             return 0;
         }
-        int ret = paw3950_set_interrupt(dev, false);
+        const int ret = paw3950_set_interrupt(dev, false);
         if (ret < 0) {
             return ret;
         }
