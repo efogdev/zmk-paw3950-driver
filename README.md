@@ -5,6 +5,8 @@ The static library is built for nRF52 family + Zephyr 3.5.
 #### Example DeviceTree
 
 ```dts
+#include <dt-bindings/zmk/paw3950-modes.h>
+
 &spi0 {
 	status = "okay";
 	compatible = "nordic,nrf-spim";
@@ -32,4 +34,21 @@ The static library is built for nRF52 family + Zephyr 3.5.
         /delete-property/ invert-y;
 	};
 };
+```
+
+#### Runtime mode switching
+
+Add the behavior to DeviceTree:
+
+```dts
+/ {
+	behaviors {
+		paw_mode: paw_mode {
+			compatible = "zmk,behavior-paw3950-power-mode-toggle";
+			#binding-cells = <2>;
+			display-name = "Switch mode of the sensor";
+			bindings = <&trackball_primary>;
+		};
+	}
+}
 ```
