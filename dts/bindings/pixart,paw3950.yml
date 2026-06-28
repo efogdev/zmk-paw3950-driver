@@ -1,0 +1,59 @@
+description: |
+  Sensor driver for the pixart PAW3950 mouse sensor 
+
+compatible: "pixart,paw3950"
+
+include: spi-device.yaml
+
+properties:
+  irq-gpios:
+    type: phandle-array
+    required: true
+  cpi:
+    type: int
+    default: 600
+    description: "CPI value (Range: 50 - 30000, Step: 50)"
+  swap-xy:
+    type: boolean
+  invert-x:
+    type: boolean
+  invert-y:
+    type: boolean
+  evt-type:
+    type: int
+    required: true
+  x-input-code:
+    type: int
+    required: true
+  y-input-code:
+    type: int
+    required: true
+  power-mode:
+    type: int
+    default: 0
+    description: |
+      Power mode
+      0: High power
+      1: Low power
+      2: Office
+  liftoff-dist:
+    type: int
+    default: 0
+    description: |
+      Universal lift cut-off (raw Lift_Config register value).
+      0x00 (0):   0.7 mm (default)
+      0x85 (133): 1.0 mm
+      0x8F (143): 2.0 mm
+      See PAW3950_LIFT_CONFIG_* in dt-bindings/zmk/paw3950-modes.h.
+  force-awake:
+    type: boolean
+  ripple-control:
+    type: boolean
+  init-retry-count:
+    type: int
+    default: 5
+    description: "Number of retries for initialization"
+  init-retry-interval:
+    type: int
+    default: 100
+    description: "Interval between initialization retries in ms"

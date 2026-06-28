@@ -1,0 +1,22 @@
+description: PAW3950 calibrate behavior
+compatible: "zmk,behavior-paw3950-calibrate"
+include: zero_param.yaml
+
+properties:
+  bindings:
+    type: phandle
+    required: true
+    description: The PAW3950 sensor instance
+
+  feedback-gpios:
+    type: phandle-array
+    required: false
+
+  feedback-extra-gpios:
+    type: phandle-array
+    required: false
+
+  feedback-duration:
+    type: int
+    default: 0
+    description: Duration of the feedback pulse in ms

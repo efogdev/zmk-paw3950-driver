@@ -1,0 +1,69 @@
+# Sensor data simulator
+#
+# Copyright (c) 2019 Nordic Semiconductor
+#
+# SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
+#
+
+menuconfig PAW3950
+  bool "PAW3950 mouse optical sensor"
+  select SPI
+  depends on INPUT
+  depends on DT_HAS_PIXART_PAW3950_ENABLED
+  help
+      Enable PAW3950 mouse optical sensor.
+
+if PAW3950
+
+config INPUT_PAW3950_INIT_PRIORITY
+    int "PAW3950 initialization priority"
+    default INPUT_INIT_PRIORITY
+
+config PAW3950_SWAP_XY
+  bool "Swap the X/Y axis of PAW3950 sensor"
+
+config PAW3950_INVERT_X
+  bool "Invert the X axis of PAW3950 sensor"
+
+config PAW3950_INVERT_Y
+  bool "Invert the Y axis of PAW3950 sensor"
+
+config PAW3950_INIT_POWER_UP_EXTRA_DELAY_MS
+  int "Extra power up init delay (ms)"
+  default 0
+  help
+    Default minimum init power up delay is 10ms.
+    Use this config to postpone init power up sequence if needs longer bootup time.
+
+config PAW3950_IGNORE_FIRST_N
+  int "Ignore first N data points"
+  default 8
+  help
+    Ignore first N data points after initialization to prevent cursor jump.
+
+config PAW3950_CALIBRATION_TIMEOUT_MS
+  int "Manual calibration timeout"
+  default 10000
+
+config PAW3950_REPORT_INTERVAL_MIN
+	int "PAW3950's default minimum report rate"
+	default 0
+	help
+	  Default minimum report interval in milliseconds.
+		Slow down input reporting for hid queue over the air.
+		Turn value down to 8ms to get sharp response if use with USB only.
+
+config PAW3950_INIT_FAILURE_THRESHOLD
+    int "Number of failed initialization attempts before triggering error"
+    default 3
+    range 0 255
+    help
+      Number of consecutive failed initialization attempts before triggering
+      an adaptive feedback error slot equal to the sensor instance index.
+      Set to 0 to disable error triggering.
+
+module = PAW3950
+module-str = PAW3950
+source "${ZEPHYR_BASE}/subsys/logging/Kconfig.template.log_config"
+
+endif #PAW3950

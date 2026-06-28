@@ -1,0 +1,17 @@
+/ {
+	behaviors {
+		/omit-if-no-ref/ paw_cal: paw_cal {
+			compatible = "zmk,behavior-paw3950-calibrate";
+			#binding-cells = <0>;
+			display-name = "Manual calibration of the PAW3950 sensors";
+			feedback-duration = <65>;
+		};
+
+		/omit-if-no-ref/ paw_mode: paw_mode {
+			compatible = "zmk,behavior-paw3950-power-mode-toggle";
+			#binding-cells = <2>;
+			display-name = "Switch PAW3950 mode";
+			feedback-duration = <65>;
+		};
+	};
+};
